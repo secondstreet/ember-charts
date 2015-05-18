@@ -15,6 +15,7 @@ var _ref;
 Ember.TEMPLATES["chart"] = Ember.HTMLBars.template((function() {
   return {
     isHTMLBars: true,
+    revision: "Ember@1.12.0",
     blockParams: 0,
     cachedFragment: null,
     hasRendered: false,
