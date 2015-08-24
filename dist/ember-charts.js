@@ -14,12 +14,24 @@ var _ref;
 
 Ember.TEMPLATES["chart"] = Ember.HTMLBars.template((function() {
   return {
-    isHTMLBars: true,
-    revision: "Ember@1.12.0",
-    blockParams: 0,
+    meta: {
+      "revision": "Ember@1.13.9",
+      "loc": {
+        "source": null,
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 4,
+          "column": 0
+        }
+      }
+    },
+    arity: 0,
     cachedFragment: null,
     hasRendered: false,
-    build: function build(dom) {
+    buildFragment: function buildFragment(dom) {
       var el0 = dom.createDocumentFragment();
       dom.setNamespace("http://www.w3.org/2000/svg");
       var el1 = dom.createElement("svg");
@@ -35,32 +47,22 @@ Ember.TEMPLATES["chart"] = Ember.HTMLBars.template((function() {
       dom.appendChild(el0, el1);
       return el0;
     },
-    render: function render(context, env, contextualElement) {
-      var dom = env.dom;
-      var hooks = env.hooks, element = hooks.element;
-      dom.detectNamespace(contextualElement);
-      var fragment;
-      if (env.useFragmentCache && dom.canClone) {
-        if (this.cachedFragment === null) {
-          fragment = this.build(dom);
-          if (this.hasRendered) {
-            this.cachedFragment = fragment;
-          } else {
-            this.hasRendered = true;
-          }
-        }
-        if (this.cachedFragment) {
-          fragment = dom.cloneNode(this.cachedFragment, true);
-        }
-      } else {
-        fragment = this.build(dom);
-      }
+    buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
       var element0 = dom.childAt(fragment, [0]);
       var element1 = dom.childAt(element0, [1]);
-      element(env, element0, context, "bind-attr", [], {"width": "outerWidth", "height": "outerHeight"});
-      element(env, element1, context, "bind-attr", [], {"transform": "transformViewport"});
-      return fragment;
-    }
+      var morphs = new Array(3);
+      morphs[0] = dom.createAttrMorph(element0, 'width');
+      morphs[1] = dom.createAttrMorph(element0, 'height');
+      morphs[2] = dom.createAttrMorph(element1, 'transform');
+      return morphs;
+    },
+    statements: [
+      ["attribute","width",["get","outerWidth",[]]],
+      ["attribute","height",["get","outerHeight",[]]],
+      ["attribute","transform",["get","transformViewport",[]]]
+    ],
+    locals: [],
+    templates: []
   };
 }()));
 
