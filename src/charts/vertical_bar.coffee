@@ -176,8 +176,8 @@ Ember.Charts.VerticalBarComponent = Ember.Charts.ChartComponent.extend(
 
   individualBarLabels: Ember.computed ->
     groups = _.values(@get 'groupedData').map (g) ->
-      _.pluck g, 'label'
-    _.uniq _.flatten(groups)
+      _.map g, 'label'
+    _.uniq _.flattenDeep(groups)
   .property 'groupedData.@each'
 
   # The range of labels assigned to each group

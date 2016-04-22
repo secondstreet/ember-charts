@@ -1,6 +1,6 @@
 /*!
 * ember-charts v0.3.0
-* Copyright 2012-2015 Addepar Inc.
+* Copyright 2012-2016 Addepar Inc.
 * See LICENSE.
 */
 (function() {
@@ -1545,7 +1545,7 @@ Ember.Charts.PieComponent = Ember.Charts.ChartComponent.extend(Ember.Charts.PieL
     if (lowPercentIndex < 0) {
       lowPercentIndex = data.length;
     } else {
-      _.rest(data, lowPercentIndex).forEach(function(d) {
+      _.dropRight(data, lowPercentIndex).forEach(function(d) {
         otherItems.push(d);
         return otherSlice.percent += d.percent;
       });
@@ -1561,14 +1561,14 @@ Ember.Charts.PieComponent = Ember.Charts.ChartComponent.extend(Ember.Charts.PieL
     if (otherSlice.percent > 0) {
       maxNumberOfSlices -= 1;
     }
-    slicesLeft = _.first(data, lowPercentIndex);
-    overflowSlices = _.rest(slicesLeft, maxNumberOfSlices);
+    slicesLeft = _.take(data, lowPercentIndex);
+    overflowSlices = _.dropRight(slicesLeft, maxNumberOfSlices);
     if (overflowSlices.length > 0) {
       overflowSlices.forEach(function(d) {
         otherItems.push(d);
         return otherSlice.percent += d.percent;
       });
-      slicesLeft = _.first(slicesLeft, maxNumberOfSlices);
+      slicesLeft = _.take(slicesLeft, maxNumberOfSlices);
     }
     if (otherItems.length === 1) {
       slicesLeft.push(otherItems[0]);
@@ -2007,9 +2007,9 @@ Ember.Charts.VerticalBarComponent = Ember.Charts.ChartComponent.extend(Ember.Cha
   individualBarLabels: Ember.computed(function() {
     var groups;
     groups = _.values(this.get('groupedData')).map(function(g) {
-      return _.pluck(g, 'label');
+      return _.map(g, 'label');
     });
-    return _.uniq(_.flatten(groups));
+    return _.uniq(_.flattenDeep(groups));
   }).property('groupedData.@each'),
   xBetweenGroupDomain: Ember.computed.alias('groupNames'),
   xWithinGroupDomain: Ember.computed.alias('individualBarLabels'),
@@ -2915,7 +2915,7 @@ Ember.Charts.TimeSeriesComponent = Ember.Charts.ChartComponent.extend(Ember.Char
     if (Ember.isEmpty(groupedBarData)) {
       return [new Date(), new Date()];
     }
-    first = _.first(groupedBarData);
+    first = _.head(groupedBarData);
     last = _.last(groupedBarData);
     startTime = new Date(first[0].time);
     endTime = new Date(last[0].time);

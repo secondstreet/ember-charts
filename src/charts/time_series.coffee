@@ -213,7 +213,7 @@ Ember.Charts.TimeSeriesComponent = Ember.Charts.ChartComponent.extend(
     groupedBarData = @get '_groupedBarData'
     return [new Date(), new Date()] if Ember.isEmpty(groupedBarData)
 
-    first = _.first(groupedBarData)
+    first = _.head(groupedBarData)
     last = _.last(groupedBarData)
     startTime = new Date(first[0].time)
     endTime = new Date(last[0].time)
