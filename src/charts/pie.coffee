@@ -86,7 +86,7 @@ Ember.Charts.PieComponent = Ember.Charts.ChartComponent.extend(
       lowPercentIndex = data.length
     else
       # Add low percent slices to other slice
-      _.dropRight(data, lowPercentIndex).forEach (d) ->
+      _.drop(data, lowPercentIndex).forEach (d) ->
         otherItems.push(d)
         otherSlice.percent += d.percent
       # Ensure Other slice is larger than minSlicePercent
@@ -102,7 +102,7 @@ Ember.Charts.PieComponent = Ember.Charts.ChartComponent.extend(
 
     # Next, continue putting slices in other slice if there are too many
     slicesLeft = _.take(data, lowPercentIndex)
-    overflowSlices = _.dropRight(slicesLeft, maxNumberOfSlices)
+    overflowSlices = _.drop(slicesLeft, maxNumberOfSlices)
     if overflowSlices.length > 0
       overflowSlices.forEach (d) ->
         otherItems.push(d)
