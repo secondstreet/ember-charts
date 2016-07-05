@@ -1545,7 +1545,7 @@ Ember.Charts.PieComponent = Ember.Charts.ChartComponent.extend(Ember.Charts.PieL
     if (lowPercentIndex < 0) {
       lowPercentIndex = data.length;
     } else {
-      _.dropRight(data, lowPercentIndex).forEach(function(d) {
+      _.drop(data, lowPercentIndex).forEach(function(d) {
         otherItems.push(d);
         return otherSlice.percent += d.percent;
       });
@@ -1562,7 +1562,7 @@ Ember.Charts.PieComponent = Ember.Charts.ChartComponent.extend(Ember.Charts.PieL
       maxNumberOfSlices -= 1;
     }
     slicesLeft = _.take(data, lowPercentIndex);
-    overflowSlices = _.dropRight(slicesLeft, maxNumberOfSlices);
+    overflowSlices = _.drop(slicesLeft, maxNumberOfSlices);
     if (overflowSlices.length > 0) {
       overflowSlices.forEach(function(d) {
         otherItems.push(d);
